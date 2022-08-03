@@ -1,0 +1,41 @@
+apiVersion: cis.f5.com/v1
+kind: TLSProfile
+metadata:
+  labels:
+    f5cr: "true"
+  name: jenkins-tls
+  namespace: default
+spec:
+  hosts:
+    - jenkins.mattconnley.com
+  tls:
+    clientSSL: tls-jenkins
+    reference: secret
+    termination: edge
+
+---
+
+apiVersion: cis.f5.com/v1
+kind: VirtualServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: jenkins-virtual-server
+  namespace: default
+spec:
+  host: jenkins.mattconnley.com
+  httpTraffic: redirect
+  pools:
+  - path: /
+    service: jenkins
+    servicePort: 8080
+    monitor:
+      type: http
+      send: “GET /rn”
+      recv: ""
+      interval: 10
+      timeout: 10
+  tlsProfileName: jenkins-tls
+  virtualServerAddress: 192.168.10.54
+  virtualServerName: "jenkins-virtual-server"
+

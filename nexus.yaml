@@ -1,0 +1,86 @@
+apiVersion: cis.f5.com/v1
+kind: TLSProfile
+metadata:
+  labels:
+    f5cr: "true"
+  name: nexus-tls
+  namespace: default
+spec:
+  hosts:
+    - nexus.mattconnley.com
+  tls:
+    clientSSL: tls-nexus
+    reference: secret
+    termination: edge
+
+---
+
+apiVersion: cis.f5.com/v1
+kind: Policy
+metadata:
+  labels:
+    f5cr: "true"
+  name: nexus-policy
+  namespace: default
+spec:
+  profiles:
+    http: /Common/nexusxforward
+  iRules:
+    secure: /Common/xrealip
+    insecure: /Common/xrealip
+    priority: high
+
+---
+
+apiVersion: cis.f5.com/v1
+kind: VirtualServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: nexus-virtual-server
+  namespace: default
+spec:
+  host: nexus.mattconnley.com
+  httpTraffic: redirect
+  policyName: nexus-policy
+  pools:
+  - monitor:
+      interval: 10
+      recv: ""
+      send: GET/rn
+      timeout: 10
+      type: http
+    path: /
+    service: nexus-nexus-repository-manager
+    servicePort: 8081
+  tlsProfileName: nexus-tls
+  virtualServerAddress: 192.168.10.55
+  virtualServerName: nexus-virtual-server
+
+---
+
+apiVersion: cis.f5.com/v1
+kind: VirtualServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: nexus-docker-virtual-server
+  namespace: default
+spec:
+  host: nexus.mattconnley.com
+  httpTraffic: none
+  policyName: nexus-policy
+  pools:
+  - monitor:
+      interval: 10
+      recv: ""
+      send: GET/rn
+      timeout: 10
+      type: http
+    path: /
+    service: nexus-nexus-repository-manager-docker-9099
+    servicePort: 9099
+  tlsProfileName: nexus-tls
+  virtualServerAddress: 192.168.10.55
+  virtualServerHTTPSPort: 8443
+  virtualServerName: nexus-docker-virtual-server
