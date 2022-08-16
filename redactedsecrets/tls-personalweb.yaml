@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  tls.crt: fff
+  tls.key: fff
+kind: Secret
+metadata:
+  name: tls-personalweb
+  namespace: default
+type: kubernetes.io/tls
