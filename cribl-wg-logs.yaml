@@ -1,0 +1,229 @@
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-elastic
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 9200
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-elastic
+  virtualServerPort: 9200
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-http
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 10080
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-http
+  virtualServerPort: 10080
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-https
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 10081
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-https
+  virtualServerPort: 10081
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-metrics
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 8125
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-metrics
+  virtualServerPort: 8125
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-s2s
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 9997
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-s2s
+  virtualServerPort: 9997
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-syslog
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 5140
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-syslog
+  virtualServerPort: 5140
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-tcpjson
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 10001
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-tcpjson
+  virtualServerPort: 10001
+
+---
+
+apiVersion: "cis.f5.com/v1"
+kind: TransportServer
+metadata:
+  labels:
+    f5cr: "true"
+  name: f5-transport-server-cribl-wg-hec
+  namespace: default
+spec:
+  mode: standard
+  persistenceProfile: "destination-address"
+  pool:
+    loadBalancingMethod: fastest-node
+    monitor:
+      type: tcp
+      interval: 10
+      timeout: 10
+    service: cribl-wg-logs-logstream-workergroup
+    servicePort: 8088
+  profiles:
+    tcp:
+      client: /Common/f5-tcp-lan
+      server: /Common/f5-tcp-wan
+  snat: auto
+  virtualServerAddress: "192.168.10.57"
+  virtualServerName: f5-transport-server-cribl-wg-hec
+  virtualServerPort: 8088
